@@ -947,6 +947,10 @@ select{
 }
 
 @media (max-width:768px){
+    .login-container{
+        background: #f1f5f9;
+        background-image: none;
+    }
 
   .login-box h1{
     font-size:28px;
