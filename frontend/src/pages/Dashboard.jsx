@@ -18,7 +18,7 @@ function Dashboard() {
   const fetchStats = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/vehicles/stats/dashboard"
+        "https://maingoscrap.onrender.com/api/vehicles/stats/dashboard"
       );
 
       setStats(response.data);

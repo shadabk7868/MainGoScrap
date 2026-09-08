@@ -11,7 +11,7 @@ function VehicleList() {
   const fetchVehicles = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/vehicles"
+        "https://maingoscrap.onrender.com/api/vehicles"
       );
 
       setVehicles(response.data.vehicles);

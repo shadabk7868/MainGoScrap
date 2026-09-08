@@ -14,7 +14,7 @@ function AddVehicle() {
     address: "",
 
     vehicleNumber: "",
-    company: "",
+    axpany: "",
     model: "",
     color: "",
     engineNumber: "",
@@ -62,7 +62,7 @@ function AddVehicle() {
     data.append("image", file);
 
     const response = await axios.post(
-      "http://localhost:5000/api/upload/image",
+      "https://maingoscrap.onrender.com/api/upload/image",
       data
     );
 
@@ -100,7 +100,7 @@ function AddVehicle() {
       }
 
       const response = await axios.post(
-        "http://localhost:5000/api/vehicles",
+        "https://maingoscrap.onrender.com/api/vehicles",
         {
           ...formData,
           vehiclePhoto: vehiclePhotoUrl,
