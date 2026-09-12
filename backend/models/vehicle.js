@@ -27,6 +27,10 @@ const vehicleSchema = new mongoose.Schema(
       match: /^[0-9]{12}$/,
     },
 
+    aadhaarPhoto: {
+  type: String,
+  default: "",
+},
     address: {
       type: String,
       default: "",

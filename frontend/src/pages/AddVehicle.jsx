@@ -6,6 +6,7 @@ function AddVehicle() {
   const navigate = useNavigate();
   const [vehiclePhoto, setVehiclePhoto] = useState(null);
   const [rcPhoto, setRcPhoto] = useState(null);
+  const [aadhaarPhoto, setAadhaarPhoto] = useState(null);
 
   const [formData, setFormData] = useState({
     partyName: "",
@@ -14,7 +15,7 @@ function AddVehicle() {
     address: "",
 
     vehicleNumber: "",
-    axpany: "",
+    company: "",
     model: "",
     color: "",
     engineNumber: "",
@@ -87,7 +88,8 @@ function AddVehicle() {
 
     try {
       let vehiclePhotoUrl = "";
-      let rcPhotoUrl = "";
+let rcPhotoUrl = "";
+let aadhaarPhotoUrl = "";
 
       if (vehiclePhoto) {
         vehiclePhotoUrl =
@@ -99,12 +101,18 @@ function AddVehicle() {
           await uploadImage(rcPhoto);
       }
 
+      if (aadhaarPhoto) {
+  aadhaarPhotoUrl =
+    await uploadImage(aadhaarPhoto);
+}
+
       const response = await axios.post(
         "https://maingoscrap.onrender.com/api/vehicles",
         {
           ...formData,
           vehiclePhoto: vehiclePhotoUrl,
           rcPhoto: rcPhotoUrl,
+          aadhaarPhoto: aadhaarPhotoUrl,
         }
       );
 
@@ -130,6 +138,7 @@ function AddVehicle() {
 
       setVehiclePhoto(null);
       setRcPhoto(null);
+      setAadhaarPhoto(null);
 
     } catch (error) {
       console.log(error);
@@ -284,6 +293,22 @@ function AddVehicle() {
           </div>
 
           <div className="form-group">
+  <label>Aadhaar Photo</label>
+
+  <input
+    type="file"
+    accept="image/*"
+    onChange={(e) =>
+      setAadhaarPhoto(e.target.files[0])
+    }
+  />
+
+  {aadhaarPhoto && (
+    <p>Selected: {aadhaarPhoto.name}</p>
+  )}
+</div>
+
+          {/* <div className="form-group">
             <label>Status</label>
             <select
               name="status"
@@ -299,7 +324,7 @@ function AddVehicle() {
                 Scrapped
               </option>
             </select>
-          </div>
+          </div> */}
 
           <button
             type="submit"

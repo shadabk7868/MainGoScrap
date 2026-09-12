@@ -9,23 +9,7 @@ const createVehicle = async (req, res) => {
       vehicle,
     });
 
-    const createVehicle = async (req, res) => {
-  try {
-    console.log(req.body);
 
-    const vehicle = await Vehicle.create(req.body);
-
-    res.status(201).json({
-      success: true,
-      vehicle,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -163,6 +147,8 @@ const getDashboardStats = async (req, res) => {
     });
   }
 };
+
+
 
 
 module.exports = { createVehicle ,getVehicles ,login ,getVehicleById ,updateVehicle ,deleteVehicle ,getDashboardStats};

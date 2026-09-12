@@ -124,10 +124,10 @@ function VehicleDetails() {
           {vehicle.vehicleType || "-"}
         </p> */}
 
-        <p>
+        {/* <p>
           <strong>Status:</strong>{" "}
           {vehicle.status}
-        </p>
+        </p> */}
       </div>
 
       {/* Purchase Details */}
@@ -200,10 +200,34 @@ function VehicleDetails() {
           </div>
         )}
 
+        {vehicle.aadhaarPhoto && (
+  <div>
+    <h3>Aadhaar Photo</h3>
+
+    <a
+      href={vehicle.aadhaarPhoto}
+      target="_blank"
+      rel="noreferrer"
+    >
+      <img
+        src={vehicle.aadhaarPhoto}
+        alt="Aadhaar"
+        width="250"
+        style={{
+          cursor: "pointer",
+          borderRadius: "10px",
+          border: "1px solid #ddd",
+        }}
+      />
+    </a>
+  </div>
+)}
+
         {!vehicle.vehiclePhoto &&
-          !vehicle.rcPhoto && (
-            <p>No Documents Uploaded</p>
-          )}
+  !vehicle.rcPhoto &&
+  !vehicle.aadhaarPhoto && (
+    <p>No Documents Uploaded</p>
+)}
       </div>
 
       {/* Dates */}
