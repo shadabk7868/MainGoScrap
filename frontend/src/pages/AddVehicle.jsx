@@ -11,6 +11,7 @@ const [brokerAadhaarPhoto, setBrokerAadhaarPhoto] = useState(null);
   const [aadhaarPhoto, setAadhaarPhoto] = useState(null);
 
   const [formData, setFormData] = useState({
+    isBroker: false,
     partyName: "",
     mobile: "",
     aadhaarNumber: "",
@@ -84,7 +85,9 @@ commission: "",
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.mobile.length !== 10) {
+    if (
+      !isBroker &&
+      formData.mobile.length !== 10) {
       alert("Mobile Number must be 10 digits");
       return;
     }
@@ -157,6 +160,7 @@ if (brokerAadhaarPhoto) {
       console.log(response.data);
 
       setFormData({
+        isBroker: false,
         partyName: "",
         mobile: "",
         aadhaarNumber: "",
@@ -181,6 +185,7 @@ commission: "",
       setRcPhoto(null);
       setAadhaarPhoto(null);
       setBrokerAadhaarPhoto(null);
+      setIsBroker(false);
 
     } catch (error) {
       console.log(error);
@@ -203,7 +208,7 @@ commission: "",
               name="partyName"
               value={formData.partyName}
               onChange={handleChange}
-              required
+              required={!isBroker}
             />
           </div>
 
@@ -215,7 +220,7 @@ commission: "",
               value={formData.mobile}
               onChange={handleChange}
               maxLength={10}
-              required
+              required={!isBroker}
             />
           </div>
 
@@ -248,19 +253,26 @@ commission: "",
       checked={isBroker}
       onChange={(e) => {
   const checked = e.target.checked;
+
   setIsBroker(checked);
 
   if (!checked) {
     setFormData({
       ...formData,
-      isBroker,
+      isBroker: false,
       brokerName: "",
       brokerMobile: "",
       brokerAadhaar: "",
       brokerAddress: "",
       commission: "",
     });
+
     setBrokerAadhaarPhoto(null);
+  } else {
+    setFormData({
+      ...formData,
+      isBroker: true,
+    });
   }
 }}
     />
@@ -279,6 +291,7 @@ commission: "",
     name="brokerName"
     value={formData.brokerName}
     onChange={handleChange}
+    required={isBroker}
   />
 </div>
 
@@ -290,6 +303,7 @@ commission: "",
     value={formData.brokerMobile}
     onChange={handleChange}
     maxLength={10}
+    required={isBroker}
   />
 </div>
 
@@ -325,7 +339,7 @@ commission: "",
 </div>
 
 <div className="form-group">
-  <label>Bichwan Aadhaar Photo</label>
+  <label>Bichwan A/S Photo</label>
 
   <input
     type="file"
@@ -438,7 +452,7 @@ commission: "",
           </div>
 
           <div className="form-group">
-  <label>Aadhaar Photo</label>
+  <label>A/S Photo</label>
 
   <input
     type="file"

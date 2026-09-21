@@ -90,53 +90,48 @@ function VehicleDetails() {
     <h2>Bichwan Information</h2>
 
     <p>
-      <strong>Name:</strong>
-      {vehicle.brokerName}
+      <strong>Name:</strong> {vehicle.brokerName}
     </p>
 
     <p>
-      <strong>Mobile:</strong>
-      {vehicle.brokerMobile}
-    </p>
-
-
-    <p>
-      <strong>Commission:</strong>
-      ₹{vehicle.commission || 0}
+      <strong>Mobile:</strong> {vehicle.brokerMobile}
     </p>
 
     <p>
-  <strong>Aadhaar:</strong>
-  {vehicle.brokerAadhaar || "-"}
-</p>
+      <strong>Commission:</strong> ₹{vehicle.commission || 0}
+    </p>
 
-<p>
-  <strong>Address:</strong>
-  {vehicle.brokerAddress || "-"}
-</p>
-  </div>
-)}
+    <p>
+      <strong>Aadhaar:</strong> {vehicle.brokerAadhaar || "-"}
+    </p>
 
-{vehicle.brokerAadhaarPhoto && (
-  <div style={{ marginTop: "15px" }}>
-    <h3>Bichwan Aadhaar Photo</h3>
+    <p>
+      <strong>Address:</strong> {vehicle.brokerAddress || "-"}
+    </p>
 
-    <a
-      href={vehicle.brokerAadhaarPhoto}
-      target="_blank"
-      rel="noreferrer"
-    >
-      <img
-        src={vehicle.brokerAadhaarPhoto}
-        alt="Broker Aadhaar"
-        width="250"
-        style={{
-          cursor: "pointer",
-          borderRadius: "10px",
-          border: "1px solid #ddd",
-        }}
-      />
-    </a>
+    {vehicle.brokerAadhaarPhoto && (
+      <div style={{ marginTop: "15px" }}>
+        <h3>Bichwan A/S Photo</h3>
+
+        <a
+          href={vehicle.brokerAadhaarPhoto}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <img
+            src={vehicle.brokerAadhaarPhoto}
+            alt="Broker Aadhaar"
+            width="250"
+            style={{
+              cursor: "pointer",
+              borderRadius: "10px",
+              border: "1px solid #ddd",
+              objectFit: "contain",
+            }}
+          />
+        </a>
+      </div>
+    )}
   </div>
 )}
 
@@ -257,7 +252,7 @@ function VehicleDetails() {
 
         {vehicle.aadhaarPhoto && (
   <div>
-    <h3>Aadhaar Photo</h3>
+    <h3>A/S Photo</h3>
 
     <a
       href={vehicle.aadhaarPhoto}
@@ -272,6 +267,7 @@ function VehicleDetails() {
           cursor: "pointer",
           borderRadius: "10px",
           border: "1px solid #ddd",
+          objectFit: "contain",
         }}
       />
     </a>
@@ -279,10 +275,10 @@ function VehicleDetails() {
 )}
 
         {!vehicle.vehiclePhoto &&
-  !vehicle.rcPhoto &&
-  !vehicle.aadhaarPhoto && 
-  !vehicle.brokerAadhaarPhoto(
-    <p>No Documents Uploaded</p>
+ !vehicle.rcPhoto &&
+ !vehicle.aadhaarPhoto &&
+ !vehicle.brokerAadhaarPhoto && (
+   <p>No Documents Uploaded</p>
 )}
       </div>
 

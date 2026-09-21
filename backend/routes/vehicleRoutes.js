@@ -3,7 +3,7 @@ const router = express.Router();
 
 const {
   createVehicle, getVehicles ,login ,getVehicleById ,updateVehicle , deleteVehicle ,getDashboardStats
-} = require("../controllers/vehicleController");
+} = require("../controllers/VehicleController");
 
 
 router.post("/login", login);

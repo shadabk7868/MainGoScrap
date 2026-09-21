@@ -4,16 +4,18 @@ const vehicleSchema = new mongoose.Schema(
   {
     // Party Details
     partyName: {
-      type: String,
-      required: true,
-      trim: true,
-    },
+  type: String,
+  required: function () {
+    return !this.isBroker;
+  },
+},
 
     mobile: {
-      type: String,
-      required: true,
-      match: /^[0-9]{10}$/,
-    },
+  type: String,
+  required: function () {
+    return !this.isBroker;
+  },
+},
 
     alternateMobile: {
       type: String,
@@ -47,16 +49,21 @@ const vehicleSchema = new mongoose.Schema(
     // Broker Details
 brokerName: {
   type: String,
-  default: "",
-  trim: true,
+  required: function () {
+    return this.isBroker;
+  },
 },
 
 brokerMobile: {
   type: String,
-  default: "",
+
+  required: function () {
+    return this.isBroker;
+  },
+
   validate: {
     validator: function (v) {
-      return v === "" || /^[0-9]{10}$/.test(v);
+      return /^[0-9]{10}$/.test(v);
     },
     message: "Broker Mobile must be 10 digits",
   },

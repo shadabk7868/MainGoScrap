@@ -6,19 +6,29 @@ function EditVehicle() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    partyName: "",
-    mobile: "",
-    aadhaarNumber: "",
-    address: "",
-    vehicleNumber: "",
-    company: "",
-    model: "",
-    color: "",
-    engineNumber: "",
-    chassisNumber: "",
-    status: "Purchased",
-  });
+  const [isBroker, setIsBroker] = useState(false);
+ const [formData, setFormData] = useState({
+  isBroker: false,
+
+  partyName: "",
+  mobile: "",
+  aadhaarNumber: "",
+  address: "",
+
+  brokerName: "",
+  brokerMobile: "",
+  brokerAadhaar: "",
+  brokerAddress: "",
+  commission: "",
+
+  vehicleNumber: "",
+  company: "",
+  model: "",
+  color: "",
+  engineNumber: "",
+  chassisNumber: "",
+  status: "Purchased",
+});
 
   const fetchVehicle = async () => {
     try {
@@ -27,23 +37,41 @@ function EditVehicle() {
       );
 
       setFormData({
-        partyName: response.data.vehicle.partyName || "",
-        mobile: response.data.vehicle.mobile || "",
-        aadhaarNumber:
-          response.data.vehicle.aadhaarNumber || "",
-        address: response.data.vehicle.address || "",
-        vehicleNumber:
-          response.data.vehicle.vehicleNumber || "",
-        company: response.data.vehicle.company || "",
-        model: response.data.vehicle.model || "",
-        color: response.data.vehicle.color || "",
-        engineNumber:
-          response.data.vehicle.engineNumber || "",
-        chassisNumber:
-          response.data.vehicle.chassisNumber || "",
-        status:
-          response.data.vehicle.status || "Purchased",
-      });
+  isBroker: response.data.vehicle.isBroker || false,
+
+  partyName: response.data.vehicle.partyName || "",
+  mobile: response.data.vehicle.mobile || "",
+  aadhaarNumber:
+    response.data.vehicle.aadhaarNumber || "",
+  address: response.data.vehicle.address || "",
+
+  brokerName:
+    response.data.vehicle.brokerName || "",
+  brokerMobile:
+    response.data.vehicle.brokerMobile || "",
+  brokerAadhaar:
+    response.data.vehicle.brokerAadhaar || "",
+  brokerAddress:
+    response.data.vehicle.brokerAddress || "",
+  commission:
+    response.data.vehicle.commission || "",
+
+  vehicleNumber:
+    response.data.vehicle.vehicleNumber || "",
+  company: response.data.vehicle.company || "",
+  model: response.data.vehicle.model || "",
+  color: response.data.vehicle.color || "",
+  engineNumber:
+    response.data.vehicle.engineNumber || "",
+  chassisNumber:
+    response.data.vehicle.chassisNumber || "",
+  status:
+    response.data.vehicle.status || "Purchased",
+});
+
+setIsBroker(
+  response.data.vehicle.isBroker || false
+);
     } catch (error) {
       console.log(error);
     }
@@ -63,6 +91,15 @@ function EditVehicle() {
           char.toUpperCase()
         );
     }
+
+    if (
+  name === "mobile" ||
+  name === "aadhaarNumber" ||
+  name === "brokerMobile" ||
+  name === "brokerAadhaar"
+) {
+  value = value.replace(/\D/g, "");
+}
 
     if (
       name === "vehicleNumber" ||
@@ -121,7 +158,7 @@ function EditVehicle() {
       name="partyName"
       value={formData.partyName}
       onChange={handleChange}
-      required
+      required={!isBroker}
     />
   </div>
 
@@ -134,7 +171,7 @@ function EditVehicle() {
       onChange={handleChange}
       maxLength={10}
       pattern="[0-9]{10}"
-      required
+      required={!isBroker}
     />
   </div>
 
@@ -159,6 +196,84 @@ function EditVehicle() {
       rows="3"
     />
   </div>
+
+  <div className="form-group checkbox-group">
+  <label>
+    <input
+      type="checkbox"
+      checked={isBroker}
+      onChange={(e) => {
+        const checked = e.target.checked;
+
+        setIsBroker(checked);
+
+        setFormData({
+          ...formData,
+          isBroker: checked,
+        });
+      }}
+    />
+    Vehicle is from Bichwan (Broker)
+  </label>
+</div>
+{isBroker && (
+  <>
+    <h2>Bichwan Details</h2>
+
+    <div className="form-group">
+      <label>Bichwan Name</label>
+      <input
+        type="text"
+        name="brokerName"
+        value={formData.brokerName}
+        onChange={handleChange}
+      />
+    </div>
+
+    <div className="form-group">
+      <label>Mobile Number</label>
+      <input
+        type="text"
+        name="brokerMobile"
+        value={formData.brokerMobile}
+        onChange={handleChange}
+        maxLength={10}
+      />
+    </div>
+
+    <div className="form-group">
+      <label>Aadhaar Number</label>
+      <input
+        type="text"
+        name="brokerAadhaar"
+        value={formData.brokerAadhaar}
+        onChange={handleChange}
+        maxLength={12}
+      />
+    </div>
+
+    <div className="form-group">
+      <label>Address</label>
+      <textarea
+        name="brokerAddress"
+        value={formData.brokerAddress}
+        onChange={handleChange}
+        rows="3"
+      />
+    </div>
+
+    <div className="form-group">
+      <label>Commission</label>
+      <input
+        type="number"
+        name="commission"
+        value={formData.commission}
+        onChange={handleChange}
+      />
+    </div>
+  </>
+)}
+
   <h2>Vehicle Details</h2>
 
 <div className="form-group">
@@ -224,7 +339,7 @@ function EditVehicle() {
   />
 </div>
 
-<div className="form-group">
+{/* <div className="form-group">
   <label>Status</label>
   <select
     name="status"
@@ -234,7 +349,7 @@ function EditVehicle() {
     <option value="Purchased">Purchased</option>
     <option value="Scrapped">Scrapped</option>
   </select>
-</div>
+</div> */}
 
 <div className="form-buttons">
 
