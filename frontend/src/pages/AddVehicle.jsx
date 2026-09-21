@@ -241,7 +241,7 @@ commission: "",
             />
           </div>
 
-          <div className="form-group">
+          <div className="form-group checkbox-group">
   <label>
     <input
       type="checkbox"
@@ -264,7 +264,7 @@ commission: "",
   }
 }}
     />
-    Vehicle Bichwan ke through aai hai
+    Vehicle is from Bichwan (Broker) 
   </label>
 </div>
 
