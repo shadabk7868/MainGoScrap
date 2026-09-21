@@ -43,6 +43,56 @@ const vehicleSchema = new mongoose.Schema(
       trim: true,
     },
 
+    //broker
+    // Broker Details
+brokerName: {
+  type: String,
+  default: "",
+  trim: true,
+},
+
+brokerMobile: {
+  type: String,
+  default: "",
+  validate: {
+    validator: function (v) {
+      return v === "" || /^[0-9]{10}$/.test(v);
+    },
+    message: "Broker Mobile must be 10 digits",
+  },
+},
+
+brokerAadhaar: {
+  type: String,
+  default: "",
+  validate: {
+    validator: function (v) {
+      return v === "" || /^[0-9]{12}$/.test(v);
+    },
+    message: "Broker Aadhaar must be 12 digits",
+  },
+},
+
+brokerAddress: {
+  type: String,
+  default: "",
+  trim: true,
+},
+
+brokerAadhaarPhoto: {
+  type: String,
+  default: "",
+},
+
+commission: {
+  type: Number,
+  default: 0,
+},
+
+isBroker: {
+  type: Boolean,
+  default: false,
+},
     // Vehicle Details
     vehicleNumber: {
       type: String,

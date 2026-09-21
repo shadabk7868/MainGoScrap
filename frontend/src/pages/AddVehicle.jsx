@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 function AddVehicle() {
   const navigate = useNavigate();
+  const [isBroker, setIsBroker] = useState(false);
+const [brokerAadhaarPhoto, setBrokerAadhaarPhoto] = useState(null);
   const [vehiclePhoto, setVehiclePhoto] = useState(null);
   const [rcPhoto, setRcPhoto] = useState(null);
   const [aadhaarPhoto, setAadhaarPhoto] = useState(null);
@@ -13,6 +15,12 @@ function AddVehicle() {
     mobile: "",
     aadhaarNumber: "",
     address: "",
+
+    brokerName: "",
+brokerMobile: "",
+brokerAadhaar: "",
+brokerAddress: "",
+commission: "",
 
     vehicleNumber: "",
     company: "",
@@ -33,6 +41,16 @@ function AddVehicle() {
         .replace(/\b\w/g, (char) => char.toUpperCase());
     }
 
+    if (
+  name === "mobile" ||
+  name === "aadhaarNumber" ||
+  name === "brokerMobile" ||
+  name === "brokerAadhaar"
+) {
+  value = value.replace(/\D/g, "");
+}
+
+
     if (name === "vehicleNumber") {
       value = value.toUpperCase();
     }
@@ -42,13 +60,6 @@ function AddVehicle() {
       name === "chassisNumber"
     ) {
       value = value.toUpperCase();
-    }
-
-    if (
-      name === "mobile" ||
-      name === "aadhaarNumber"
-    ) {
-      value = value.replace(/\D/g, "");
     }
 
     setFormData({
@@ -84,12 +95,31 @@ function AddVehicle() {
     ) {
       alert("Aadhaar Number must be 12 digits");
       return;
+
+      
     }
+
+    if (
+  formData.brokerMobile &&
+  formData.brokerMobile.length !== 10
+) {
+  alert("Broker Mobile must be 10 digits");
+  return;
+}
+
+if (
+  formData.brokerAadhaar &&
+  formData.brokerAadhaar.length !== 12
+) {
+  alert("Broker Aadhaar must be 12 digits");
+  return;
+}
 
     try {
       let vehiclePhotoUrl = "";
 let rcPhotoUrl = "";
 let aadhaarPhotoUrl = "";
+let brokerAadhaarPhotoUrl = "";
 
       if (vehiclePhoto) {
         vehiclePhotoUrl =
@@ -106,6 +136,11 @@ let aadhaarPhotoUrl = "";
     await uploadImage(aadhaarPhoto);
 }
 
+if (brokerAadhaarPhoto) {
+  brokerAadhaarPhotoUrl =
+    await uploadImage(brokerAadhaarPhoto);
+}
+
       const response = await axios.post(
         "https://maingoscrap.onrender.com/api/vehicles",
         {
@@ -113,6 +148,7 @@ let aadhaarPhotoUrl = "";
           vehiclePhoto: vehiclePhotoUrl,
           rcPhoto: rcPhotoUrl,
           aadhaarPhoto: aadhaarPhotoUrl,
+          brokerAadhaarPhoto: brokerAadhaarPhotoUrl,
         }
       );
 
@@ -125,6 +161,11 @@ let aadhaarPhotoUrl = "";
         mobile: "",
         aadhaarNumber: "",
         address: "",
+        brokerName: "",
+brokerMobile: "",
+brokerAadhaar: "",
+brokerAddress: "",
+commission: "",
 
         vehicleNumber: "",
         company: "",
@@ -139,6 +180,7 @@ let aadhaarPhotoUrl = "";
       setVehiclePhoto(null);
       setRcPhoto(null);
       setAadhaarPhoto(null);
+      setBrokerAadhaarPhoto(null);
 
     } catch (error) {
       console.log(error);
@@ -198,6 +240,109 @@ let aadhaarPhotoUrl = "";
               rows="3"
             />
           </div>
+
+          <div className="form-group">
+  <label>
+    <input
+      type="checkbox"
+      checked={isBroker}
+      onChange={(e) => {
+  const checked = e.target.checked;
+  setIsBroker(checked);
+
+  if (!checked) {
+    setFormData({
+      ...formData,
+      isBroker,
+      brokerName: "",
+      brokerMobile: "",
+      brokerAadhaar: "",
+      brokerAddress: "",
+      commission: "",
+    });
+    setBrokerAadhaarPhoto(null);
+  }
+}}
+    />
+    Vehicle Bichwan ke through aai hai
+  </label>
+</div>
+
+{isBroker && (
+  <>
+    <h2>Bichwan Details</h2>
+
+    <div className="form-group">
+  <label>Bichwan Name</label>
+  <input
+    type="text"
+    name="brokerName"
+    value={formData.brokerName}
+    onChange={handleChange}
+  />
+</div>
+
+<div className="form-group">
+  <label>Mobile Number</label>
+  <input
+    type="text"
+    name="brokerMobile"
+    value={formData.brokerMobile}
+    onChange={handleChange}
+    maxLength={10}
+  />
+</div>
+
+<div className="form-group">
+  <label>Aadhaar Number</label>
+  <input
+    type="text"
+    name="brokerAadhaar"
+    value={formData.brokerAadhaar}
+    onChange={handleChange}
+    maxLength={12}
+  />
+</div>
+
+<div className="form-group">
+  <label>Address</label>
+  <textarea
+    name="brokerAddress"
+    value={formData.brokerAddress}
+    onChange={handleChange}
+    rows="3"
+  />
+</div>
+
+<div className="form-group">
+  <label>Commission</label>
+  <input
+    type="number"
+    name="commission"
+    value={formData.commission}
+    onChange={handleChange}
+  />
+</div>
+
+<div className="form-group">
+  <label>Bichwan Aadhaar Photo</label>
+
+  <input
+    type="file"
+    accept="image/*"
+    onChange={(e) =>
+      setBrokerAadhaarPhoto(e.target.files[0])
+    }
+  />
+
+  {brokerAadhaarPhoto && (
+    <p>
+      Selected: {brokerAadhaarPhoto.name}
+    </p>
+  )}
+</div>
+  </>
+)}
 
           <h2>Vehicle Details</h2>
 

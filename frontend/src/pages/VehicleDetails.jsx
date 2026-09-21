@@ -85,6 +85,61 @@ function VehicleDetails() {
         </p> */}
       </div>
 
+      {vehicle.brokerName && (
+  <div className="details-card">
+    <h2>Bichwan Information</h2>
+
+    <p>
+      <strong>Name:</strong>
+      {vehicle.brokerName}
+    </p>
+
+    <p>
+      <strong>Mobile:</strong>
+      {vehicle.brokerMobile}
+    </p>
+
+
+    <p>
+      <strong>Commission:</strong>
+      ₹{vehicle.commission || 0}
+    </p>
+
+    <p>
+  <strong>Aadhaar:</strong>
+  {vehicle.brokerAadhaar || "-"}
+</p>
+
+<p>
+  <strong>Address:</strong>
+  {vehicle.brokerAddress || "-"}
+</p>
+  </div>
+)}
+
+{vehicle.brokerAadhaarPhoto && (
+  <div style={{ marginTop: "15px" }}>
+    <h3>Bichwan Aadhaar Photo</h3>
+
+    <a
+      href={vehicle.brokerAadhaarPhoto}
+      target="_blank"
+      rel="noreferrer"
+    >
+      <img
+        src={vehicle.brokerAadhaarPhoto}
+        alt="Broker Aadhaar"
+        width="250"
+        style={{
+          cursor: "pointer",
+          borderRadius: "10px",
+          border: "1px solid #ddd",
+        }}
+      />
+    </a>
+  </div>
+)}
+
       {/* Vehicle Details */}
       <div className="details-card">
         <h2>Vehicle Information</h2>
@@ -225,7 +280,8 @@ function VehicleDetails() {
 
         {!vehicle.vehiclePhoto &&
   !vehicle.rcPhoto &&
-  !vehicle.aadhaarPhoto && (
+  !vehicle.aadhaarPhoto && 
+  !vehicle.brokerAadhaarPhoto(
     <p>No Documents Uploaded</p>
 )}
       </div>
