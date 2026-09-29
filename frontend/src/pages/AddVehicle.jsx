@@ -216,7 +216,6 @@ commission: "",
               name="partyName"
               value={formData.partyName}
               onChange={handleChange}
-              required={!isBroker}
             />
           </div>
 
@@ -228,7 +227,6 @@ commission: "",
               value={formData.mobile}
               onChange={handleChange}
               maxLength={10}
-              required={!isBroker}
             />
           </div>
 
