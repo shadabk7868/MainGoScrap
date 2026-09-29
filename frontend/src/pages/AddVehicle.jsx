@@ -74,6 +74,7 @@ commission: "",
 
     data.append("image", file);
 
+
     const response = await axios.post(
       "https://maingoscrap.onrender.com/api/upload/image",
       data
@@ -144,6 +145,13 @@ if (brokerAadhaarPhoto) {
     await uploadImage(brokerAadhaarPhoto);
 }
 
+console.log("FINAL FORM DATA:", formData);
+console.log("FILES:", {
+  vehiclePhotoUrl,
+  rcPhotoUrl,
+  aadhaarPhotoUrl,
+  brokerAadhaarPhotoUrl,
+});
       const response = await axios.post(
         "https://maingoscrap.onrender.com/api/vehicles",
         {
