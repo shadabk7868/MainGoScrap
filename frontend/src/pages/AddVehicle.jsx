@@ -87,11 +87,12 @@ commission: "",
     e.preventDefault();
 
     if (
-      !isBroker &&
-      formData.mobile.length !== 10) {
-      alert("Mobile Number must be 10 digits");
-      return;
-    }
+  formData.mobile &&
+  formData.mobile.length !== 10
+) {
+  alert("Mobile Number must be 10 digits");
+  return;
+}
 
     if (
       formData.aadhaarNumber &&
@@ -210,7 +211,7 @@ commission: "",
           <h2>Party Details</h2>
 
           <div className="form-group">
-            <label>Party Name *</label>
+            <label>Party Name</label>
             <input
               type="text"
               name="partyName"
@@ -220,7 +221,7 @@ commission: "",
           </div>
 
           <div className="form-group">
-            <label>Mobile Number *</label>
+            <label>Mobile Number</label>
             <input
               type="tel"
               name="mobile"
