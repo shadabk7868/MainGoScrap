@@ -291,7 +291,6 @@ commission: "",
     name="brokerName"
     value={formData.brokerName}
     onChange={handleChange}
-    required={isBroker}
   />
 </div>
 
@@ -303,7 +302,6 @@ commission: "",
     value={formData.brokerMobile}
     onChange={handleChange}
     maxLength={10}
-    required={isBroker}
   />
 </div>
 

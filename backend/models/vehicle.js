@@ -3,21 +3,20 @@ const mongoose = require("mongoose");
 const vehicleSchema = new mongoose.Schema(
   {
     // Party Details
-    partyName: {
+   // Party Details
+
+partyName: {
   type: String,
-  required: function () {
-    return !this.isBroker;
-  },
+  default: "",
+  trim: true,
 },
 
-    mobile: {
+mobile: {
   type: String,
-  required: function () {
-    return !this.isBroker;
-  },
+  default: "",
 },
 
-    alternateMobile: {
+alternateMobile: {
   type: String,
   default: "",
   validate: {
@@ -28,7 +27,7 @@ const vehicleSchema = new mongoose.Schema(
   },
 },
 
-    aadhaarNumber: {
+aadhaarNumber: {
   type: String,
   default: "",
   validate: {
@@ -39,38 +38,34 @@ const vehicleSchema = new mongoose.Schema(
   },
 },
 
-    aadhaarPhoto: {
+aadhaarPhoto: {
   type: String,
   default: "",
 },
-    address: {
-      type: String,
-      default: "",
-      trim: true,
-    },
 
-    city: {
-      type: String,
-      default: "",
-      trim: true,
-    },
+address: {
+  type: String,
+  default: "",
+  trim: true,
+},
 
-    //broker
-    // Broker Details
+city: {
+  type: String,
+  default: "",
+  trim: true,
+},
+
+// Broker Details
+
 brokerName: {
   type: String,
-  required: function () {
-    return this.isBroker;
-  },
+  default: "",
+  trim: true,
 },
 
 brokerMobile: {
   type: String,
-
-  required: function () {
-    return this.isBroker;
-  },
-
+  default: "",
   validate: {
     validator: function (v) {
       return !v || /^[0-9]{10}$/.test(v);
@@ -84,7 +79,7 @@ brokerAadhaar: {
   default: "",
   validate: {
     validator: function (v) {
-      return v === "" || /^[0-9]{12}$/.test(v);
+      return !v || /^[0-9]{12}$/.test(v);
     },
     message: "Broker Aadhaar must be 12 digits",
   },

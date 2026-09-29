@@ -1,52 +1,28 @@
 const Vehicle = require("../models/vehicle.js");
 
-// const createVehicle = async (req, res) => {
-//   try {
-//     const vehicle = await Vehicle.create(req.body);
-
-//     res.status(201).json({
-//       success: true,
-//       vehicle,
-//     });
-
-
-//   } catch (error) {
-//   console.log("CREATE VEHICLE ERROR:", error);
-
-//   res.status(500).json({
-//     success: false,
-//     message: error.message,
-//   });
-// }
-// };
-
 const createVehicle = async (req, res) => {
-  console.log("========== CREATE VEHICLE START ==========");
-  console.log("BODY:", req.body);
-
   try {
     const vehicle = await Vehicle.create(req.body);
-
-    console.log("VEHICLE CREATED:", vehicle._id);
 
     res.status(201).json({
       success: true,
       vehicle,
     });
 
-  } catch (error) {
-    console.error("========== CREATE VEHICLE ERROR ==========");
-    console.error(error);
-    console.error("MESSAGE:", error.message);
-    console.error("NAME:", error.name);
-    console.error("ERRORS:", error.errors);
 
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
+  } catch (error) {
+  console.error("CREATE VEHICLE ERROR:", error);
+  console.error("MESSAGE:", error.message);
+  console.error("NAME:", error.name);
+  console.error("ERRORS:", error.errors);
+
+  res.status(500).json({
+    success: false,
+    message: error.message,
+  });
+}
 };
+
 const getVehicles = async (req, res) => {
   try {
     const vehicles = await Vehicle.find().sort({ createdAt: -1 });
@@ -113,73 +89,34 @@ const getVehicleById = async (req, res) => {
   }
 };
 
-// const updateVehicle = async (req, res) => {
-//   try {
-//     const vehicle = await Vehicle.findByIdAndUpdate(
-//       req.params.id,
-//       req.body,
-//       {
-//       new: true,
-//       runValidators: true,
-//     }
-//     );
-
-//     res.status(200).json({
-//       success: true,
-//       vehicle,
-//     });
-//  } catch (error) {
-//   console.log("UPDATE VEHICLE ERROR:", error);
-
-//   res.status(500).json({
-//     success: false,
-//     message: error.message,
-//   });
-// }
-// };
-
 const updateVehicle = async (req, res) => {
-  console.log("========== UPDATE VEHICLE START ==========");
-  console.log("ID:", req.params.id);
-  console.log("BODY:", req.body);
-
   try {
     const vehicle = await Vehicle.findByIdAndUpdate(
       req.params.id,
       req.body,
       {
-        new: true,
-        runValidators: true,
-      }
-    );
-
-    console.log("VEHICLE UPDATED:", vehicle);
-
-    if (!vehicle) {
-      return res.status(404).json({
-        success: false,
-        message: "Vehicle Not Found",
-      });
+      new: true,
+      runValidators: true,
     }
+    );
 
     res.status(200).json({
       success: true,
       vehicle,
     });
+ } catch (error) {
+  console.error("UPDATE VEHICLE ERROR:", error);
+  console.error("MESSAGE:", error.message);
+  console.error("NAME:", error.name);
+  console.error("ERRORS:", error.errors);
 
-  } catch (error) {
-    console.error("========== UPDATE VEHICLE ERROR ==========");
-    console.error(error);
-    console.error("MESSAGE:", error.message);
-    console.error("NAME:", error.name);
-    console.error("ERRORS:", error.errors);
-
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
+  res.status(500).json({
+    success: false,
+    message: error.message,
+  });
+}
 };
+
 const deleteVehicle = async (req, res) => {
   try {
     await Vehicle.findByIdAndDelete(req.params.id);
