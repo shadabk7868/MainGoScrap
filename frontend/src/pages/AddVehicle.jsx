@@ -21,7 +21,7 @@ const [brokerAadhaarPhoto, setBrokerAadhaarPhoto] = useState(null);
 brokerMobile: "",
 brokerAadhaar: "",
 brokerAddress: "",
-commission: "",
+commission: 0,
 
     vehicleNumber: "",
     company: "",
@@ -154,15 +154,19 @@ console.log("FILES:", {
   brokerAadhaarPhotoUrl,
 });
       const response = await axios.post(
-        "https://maingoscrap.onrender.com/api/vehicles",
-        {
-          ...formData,
-          vehiclePhoto: vehiclePhotoUrl,
-          rcPhoto: rcPhotoUrl,
-          aadhaarPhoto: aadhaarPhotoUrl,
-          brokerAadhaarPhoto: brokerAadhaarPhotoUrl,
-        }
-      );
+  "https://maingoscrap.onrender.com/api/vehicles",
+  {
+    ...formData,
+    commission: formData.commission === ""
+      ? 0
+      : Number(formData.commission),
+
+    vehiclePhoto: vehiclePhotoUrl,
+    rcPhoto: rcPhotoUrl,
+    aadhaarPhoto: aadhaarPhotoUrl,
+    brokerAadhaarPhoto: brokerAadhaarPhotoUrl,
+  }
+);
 
       navigate("/dashboard");
 
@@ -178,7 +182,7 @@ console.log("FILES:", {
 brokerMobile: "",
 brokerAadhaar: "",
 brokerAddress: "",
-commission: "",
+commission: 0,
 
         vehicleNumber: "",
         company: "",
