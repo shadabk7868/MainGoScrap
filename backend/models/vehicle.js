@@ -18,16 +18,26 @@ const vehicleSchema = new mongoose.Schema(
 },
 
     alternateMobile: {
-      type: String,
-      default: "",
-      match: /^[0-9]{10}$/,
+  type: String,
+  default: "",
+  validate: {
+    validator: function (v) {
+      return !v || /^[0-9]{10}$/.test(v);
     },
+    message: "Alternate Mobile must be 10 digits",
+  },
+},
 
     aadhaarNumber: {
-      type: String,
-      default: "",
-      match: /^[0-9]{12}$/,
+  type: String,
+  default: "",
+  validate: {
+    validator: function (v) {
+      return !v || /^[0-9]{12}$/.test(v);
     },
+    message: "Aadhaar Number must be 12 digits",
+  },
+},
 
     aadhaarPhoto: {
   type: String,
@@ -63,7 +73,7 @@ brokerMobile: {
 
   validate: {
     validator: function (v) {
-      return /^[0-9]{10}$/.test(v);
+      return !v || /^[0-9]{10}$/.test(v);
     },
     message: "Broker Mobile must be 10 digits",
   },

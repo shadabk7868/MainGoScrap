@@ -11,11 +11,13 @@ const createVehicle = async (req, res) => {
 
 
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
+  console.log("CREATE VEHICLE ERROR:", error);
+
+  res.status(500).json({
+    success: false,
+    message: error.message,
+  });
+}
 };
 
 const getVehicles = async (req, res) => {
@@ -99,12 +101,14 @@ const updateVehicle = async (req, res) => {
       success: true,
       vehicle,
     });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
+ } catch (error) {
+  console.log("UPDATE VEHICLE ERROR:", error);
+
+  res.status(500).json({
+    success: false,
+    message: error.message,
+  });
+}
 };
 
 const deleteVehicle = async (req, res) => {
