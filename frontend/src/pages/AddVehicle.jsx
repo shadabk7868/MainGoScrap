@@ -166,12 +166,6 @@ if (brokerAadhaarPhoto) {
 }
 
 
-
-if (brokerAadhaarPhoto) {
-  brokerAadhaarPhotoUrl =
-    await uploadImage(brokerAadhaarPhoto);
-}
-
       const response = await axios.post(
   "https://maingoscrap.onrender.com/api/vehicles",
   {
