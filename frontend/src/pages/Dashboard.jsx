@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.jpeg";
-// import Bg from "../assets/Dashboardbg.jpg";
+import Carcard from "../assets/Carcard.jpeg"
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -11,8 +11,6 @@ function Dashboard() {
 
   const [stats, setStats] = useState({
     totalVehicles: 0,
-    purchasedVehicles: 0,
-    scrappedVehicles: 0,
   });
 
   const fetchStats = async () => {
@@ -21,7 +19,9 @@ function Dashboard() {
         "https://maingoscrap.onrender.com/api/vehicles/stats/dashboard"
       );
 
-      setStats(response.data);
+      setStats({
+        totalVehicles: response.data.totalVehicles || 0,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -39,94 +39,96 @@ function Dashboard() {
   return (
     <div className="dashboard-layout">
 
+      {/* Mobile Menu Button */}
       <button
-    className="toggle-btn-fixed"
-    onClick={() => setSidebarOpen(!sidebarOpen)}
-  >
-    ☰
-  </button>
-
-  {sidebarOpen && (
-  <div
-    className="sidebar-overlay"
-    onClick={() => setSidebarOpen(false)}
-  ></div>
-)}
-
-  <div className={`sidebar ${sidebarOpen ? "open" : "closed"}`}>
-
-    <div className="sidebar-menu">
-
-      <button onClick={() => navigate("/add-vehicle")}>
-       + Add Vehicle
+        className="toggle-btn-fixed"
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+      >
+        ☰
       </button>
 
-      <button onClick={() => navigate("/vehicles")}>
-        Vehicle List
-      </button>
+      {/* Overlay */}
+      {sidebarOpen && (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setSidebarOpen(false)}
+        ></div>
+      )}
 
-      <button onClick={handleLogout}>
-        Logout
-      </button>
+      {/* Sidebar */}
+      <div className={`sidebar ${sidebarOpen ? "open" : "closed"}`}>
+        <div className="sidebar-menu">
 
-    </div>
+          <button onClick={() => navigate("/add-vehicle")}>
+            + Add Vehicle
+          </button>
 
-  </div>
+          <button onClick={() => navigate("/vehicles")}>
+            Vehicle List
+          </button>
+
+          <button onClick={handleLogout}>
+            Logout
+          </button>
+
+        </div>
+      </div>
 
       {/* Main Content */}
       <div className="dashboard-container">
 
+        {/* Header */}
         <div className="dashboard-header">
 
           <div className="logo-section">
-            <img src={logo} alt="logo" />
+            <img src={logo} alt="GoScrap logo" />
             <h2>GoScrap</h2>
           </div>
 
           <button
-    className="header-add-btn"
-    onClick={() => navigate("/add-vehicle")}
-  >
-    + Add Vehicle
-  </button>
-          {/* <div className="welcome-section">
-            <h3>Welcome Sheikh Imroz!!</h3>
-          </div> */}
+            className="header-add-btn"
+            onClick={() => navigate("/add-vehicle")}
+          >
+            + Add Vehicle
+          </button>
 
         </div>
 
+        {/* Welcome */}
         <div className="dashboard-welcome">
-  <h2>Welcome Sheikh Imroz !!</h2>
-  <p>Vehicle Management Dashboard</p>
-</div>
+          <h2>Welcome Sheikh Imroz !!</h2>
+          <p>Vehicle Management Dashboard</p>
+        </div>
 
+        {/* Dashboard Cards */}
         <div className="dashboard-cards">
 
-  <div
-    className="card total-card"
-    onClick={() => navigate("/vehicles")}
-  >
-    <h3>Total Vehicles</h3>
-    <p>{stats.totalVehicles}</p>
-  </div>
+          {/* Total Vehicles */}
+          <div
+            className="card dashboard-action-card total-card"
+            onClick={() => navigate("/vehicles")}
+          >
+            <h3>Total Vehicles</h3>
+            <p>{stats.totalVehicles}</p>
+          </div>
 
-  <div
-    className="card purchase-card"
-    onClick={() => navigate("/vehicles?status=Purchased")}
-  >
-    <h3>Purchased Vehicles</h3>
-    <p>{stats.purchasedVehicles}</p>
-  </div>
+          {/* Go To Vehicle List */}
+          <div
+            className="card dashboard-action-card list-card"
+            style={{
+                backgroundImage: `url(${Carcard})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+              }}
+            onClick={() => navigate("/vehicles")}
+            
+          >
+            {/* <h3>Go To Vehicle List</h3> */}
+            <p>View All Vehicles →</p>
+          </div>
 
-  <div
-    className="card scrap-card"
-    onClick={() => navigate("/vehicles?status=Scrapped")}
-  >
-    <h3>Scrapped Vehicles</h3>
-    <p>{stats.scrappedVehicles}</p>
-  </div>
-
-</div>
+        </div>
 
       </div>
 
@@ -135,3 +137,4 @@ function Dashboard() {
 }
 
 export default Dashboard;
+

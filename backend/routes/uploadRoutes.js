@@ -22,7 +22,6 @@ router.post(
     try {
       const file = req.file;
 
-      console.log(req.file);
       const base64 = Buffer.from(
         file.buffer
       ).toString("base64");
@@ -33,15 +32,15 @@ router.post(
       const result = await cloudinary.uploader.upload(
   dataURI,
   {
-    folder: "goscrap",
+    asset_folder: "goscrap",
     resource_type: "image",
   }
 );
 
-console.log(result.secure_url);
       res.json({
         success: true,
         imageUrl: result.secure_url,
+        publicId: result.public_id,
       });
     } catch (error) {
   console.log("UPLOAD ERROR:", error);

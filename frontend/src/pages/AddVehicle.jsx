@@ -69,19 +69,24 @@ commission: 0,
     });
   };
 
-  const uploadImage = async (file) => {
-    const data = new FormData();
 
-    data.append("image", file);
+const uploadImage = async (file) => {
+  const data = new FormData();
 
+  data.append("image", file);
 
-    const response = await axios.post(
-      "https://maingoscrap.onrender.com/api/upload/image",
-      data
-    );
+  const response = await axios.post(
+    "https://maingoscrap.onrender.com/api/upload/image",
+    data
+  );
 
-    return response.data.imageUrl;
+  return {
+    imageUrl: response.data.imageUrl,
+    publicId: response.data.publicId,
   };
+};
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -121,38 +126,52 @@ if (
 }
 
     try {
-      let vehiclePhotoUrl = "";
-let rcPhotoUrl = "";
-let aadhaarPhotoUrl = "";
-let brokerAadhaarPhotoUrl = "";
+let vehiclePhotoData = {
+  imageUrl: "",
+  publicId: "",
+};
 
-      if (vehiclePhoto) {
-        vehiclePhotoUrl =
-          await uploadImage(vehiclePhoto);
-      }
+let rcPhotoData = {
+  imageUrl: "",
+  publicId: "",
+};
 
-      if (rcPhoto) {
-        rcPhotoUrl =
-          await uploadImage(rcPhoto);
-      }
+let aadhaarPhotoData = {
+  imageUrl: "",
+  publicId: "",
+};
 
-      if (aadhaarPhoto) {
-  aadhaarPhotoUrl =
-    await uploadImage(aadhaarPhoto);
+let brokerAadhaarPhotoData = {
+  imageUrl: "",
+  publicId: "",
+};
+
+
+    
+if (vehiclePhoto) {
+  vehiclePhotoData = await uploadImage(vehiclePhoto);
 }
+
+if (rcPhoto) {
+  rcPhotoData = await uploadImage(rcPhoto);
+}
+
+if (aadhaarPhoto) {
+  aadhaarPhotoData = await uploadImage(aadhaarPhoto);
+}
+
+if (brokerAadhaarPhoto) {
+  brokerAadhaarPhotoData =
+    await uploadImage(brokerAadhaarPhoto);
+}
+
+
 
 if (brokerAadhaarPhoto) {
   brokerAadhaarPhotoUrl =
     await uploadImage(brokerAadhaarPhoto);
 }
 
-console.log("FINAL FORM DATA:", formData);
-console.log("FILES:", {
-  vehiclePhotoUrl,
-  rcPhotoUrl,
-  aadhaarPhotoUrl,
-  brokerAadhaarPhotoUrl,
-});
       const response = await axios.post(
   "https://maingoscrap.onrender.com/api/vehicles",
   {
@@ -161,10 +180,20 @@ console.log("FILES:", {
       ? 0
       : Number(formData.commission),
 
-    vehiclePhoto: vehiclePhotoUrl,
-    rcPhoto: rcPhotoUrl,
-    aadhaarPhoto: aadhaarPhotoUrl,
-    brokerAadhaarPhoto: brokerAadhaarPhotoUrl,
+vehiclePhoto: vehiclePhotoData.imageUrl,
+vehiclePhotoPublicId: vehiclePhotoData.publicId,
+
+rcPhoto: rcPhotoData.imageUrl,
+rcPhotoPublicId: rcPhotoData.publicId,
+
+aadhaarPhoto: aadhaarPhotoData.imageUrl,
+aadhaarPhotoPublicId: aadhaarPhotoData.publicId,
+
+brokerAadhaarPhoto: brokerAadhaarPhotoData.imageUrl,
+brokerAadhaarPhotoPublicId:
+  brokerAadhaarPhotoData.publicId,
+
+
   }
 );
 

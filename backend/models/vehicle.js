@@ -174,6 +174,26 @@ isBroker: {
       default: "",
     },
 
+    vehiclePhotoPublicId: {
+  type: String,
+  default: "",
+},
+
+rcPhotoPublicId: {
+  type: String,
+  default: "",
+},
+
+aadhaarPhotoPublicId: {
+  type: String,
+  default: "",
+},
+
+brokerAadhaarPhotoPublicId: {
+  type: String,
+  default: "",
+},
+
     // Images
     vehiclePhoto: {
       type: String,
@@ -188,6 +208,8 @@ isBroker: {
   {
     timestamps: true,
   }
+
+  
 );
 
 module.exports = mongoose.model("Vehicle", vehicleSchema);

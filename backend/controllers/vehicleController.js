@@ -1,4 +1,5 @@
 const Vehicle = require("../models/vehicle.js");
+const cloudinary = require("../config/cloudinary");
 
 const createVehicle = async (req, res) => {
   try {
@@ -11,10 +12,6 @@ const createVehicle = async (req, res) => {
 
 
   } catch (error) {
-  console.error("CREATE VEHICLE ERROR:", error);
-  console.error("MESSAGE:", error.message);
-  console.error("NAME:", error.name);
-  console.error("ERRORS:", error.errors);
 
   res.status(500).json({
     success: false,
@@ -105,10 +102,6 @@ const updateVehicle = async (req, res) => {
       vehicle,
     });
  } catch (error) {
-  console.error("UPDATE VEHICLE ERROR:", error);
-  console.error("MESSAGE:", error.message);
-  console.error("NAME:", error.name);
-  console.error("ERRORS:", error.errors);
 
   res.status(500).json({
     success: false,
@@ -119,19 +112,65 @@ const updateVehicle = async (req, res) => {
 
 const deleteVehicle = async (req, res) => {
   try {
+    // First find the vehicle
+    const vehicle = await Vehicle.findById(req.params.id);
+
+    if (!vehicle) {
+      return res.status(404).json({
+        success: false,
+        message: "Vehicle Not Found",
+      });
+    }
+
+    // Collect all Cloudinary public IDs
+    const publicIds = [
+      vehicle.vehiclePhotoPublicId,
+      vehicle.rcPhotoPublicId,
+      vehicle.aadhaarPhotoPublicId,
+      vehicle.brokerAadhaarPhotoPublicId,
+    ].filter(Boolean);
+
+    // Delete images from Cloudinary
+    for (const publicId of publicIds) {
+      try {
+        const result = await cloudinary.uploader.destroy(
+          publicId,
+          {
+            resource_type: "image",
+            invalidate: true,
+          }
+        );
+
+        console.log(
+          `Cloudinary delete: ${publicId}`,
+          result
+        );
+      } catch (cloudinaryError) {
+        console.log(
+          `Cloudinary delete failed: ${publicId}`,
+          cloudinaryError.message
+        );
+      }
+    }
+
+    // Delete vehicle from MongoDB
     await Vehicle.findByIdAndDelete(req.params.id);
 
     res.status(200).json({
       success: true,
-      message: "Vehicle Deleted",
+      message: "Vehicle and images deleted successfully",
     });
   } catch (error) {
+    console.log("DELETE VEHICLE ERROR:", error);
+
     res.status(500).json({
       success: false,
       message: error.message,
     });
   }
 };
+
+
 
 const getDashboardStats = async (req, res) => {
   try {
