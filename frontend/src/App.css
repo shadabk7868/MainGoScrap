@@ -1394,3 +1394,113 @@ select{
     font-size: 30px;
   }
 }
+
+/* =========================================================
+   MOBILE HAMBURGER / NAVBAR FIX
+========================================================= */
+
+@media (max-width: 768px) {
+
+  /* Hamburger button */
+  .toggle-btn-fixed {
+    position: fixed;
+
+    top: 12px;
+    left: 12px;
+
+    width: 42px;
+    height: 42px;
+
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+    border: none;
+
+    color: #cc4628;
+    font-size: 24px;
+    line-height: 1;
+
+    z-index: 2000;
+  }
+
+  /* Header ko hamburger se neeche rakho */
+  .dashboard-container {
+    padding-top: 65px;
+  }
+
+  .dashboard-header {
+    position: relative;
+    width: 100%;
+    padding: 12px 15px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+  }
+
+  .logo-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .logo-section img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .logo-section h2 {
+    font-size: 19px;
+  }
+
+  .header-add-btn {
+    padding: 9px 12px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+}
+
+
+/* Very small mobile */
+@media (max-width: 480px) {
+
+  .toggle-btn-fixed {
+    top: 10px;
+    left: 10px;
+
+    width: 40px;
+    height: 40px;
+
+    font-size: 22px;
+  }
+
+  .dashboard-container {
+    padding-top: 58px;
+  }
+
+  .dashboard-header {
+    padding: 10px 12px;
+  }
+
+  .logo-section img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .logo-section h2 {
+    font-size: 18px;
+  }
+
+  .header-add-btn {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+}
