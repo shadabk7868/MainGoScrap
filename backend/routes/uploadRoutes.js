@@ -37,6 +37,7 @@ router.post(
   }
 );
 
+
       res.json({
         success: true,
         imageUrl: result.secure_url,
